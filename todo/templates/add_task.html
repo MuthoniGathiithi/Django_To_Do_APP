@@ -47,6 +47,14 @@
             font-size: 16px;
             box-sizing: border-box;
         }
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
         .btn {
             background-color: #007bff;
             color: white;
@@ -140,7 +148,20 @@
                     <label for="title">Task Title:</label>
                     <input type="text" id="title" name="title" required placeholder="Enter task title...">
                 </div>
+                <div class="form-group">
+                    <label for="date">Task Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
                 <button type="submit" class="btn">Add Task</button>
+            </form>
+        </div>
+
+        <!-- Date Filter Form -->
+        <div class="date-filter-form" style="margin-bottom: 30px;">
+            <h2>Filter Tasks by Date</h2>
+            <form method="get">
+                <input type="date" name="date" value="{{ selected_date|default:today }}">
+                <button type="submit" class="btn">Show Tasks</button>
             </form>
         </div>
 

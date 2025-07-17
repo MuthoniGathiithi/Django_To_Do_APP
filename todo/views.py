@@ -5,16 +5,18 @@ from datetime import date
 def show_tasks(request):
     selected_date = request.GET.get('date')
     if selected_date:
-        tasks = Task.objects.filter(date=selected_date)
+        selected_date_obj = date.fromisoformat(selected_date)
+        tasks = Task.objects.filter(date=selected_date_obj)
     else:
-        tasks = Task.objects.filter(date=date.today())
+        selected_date_obj = date.today()
+        tasks = Task.objects.filter(date=selected_date_obj)
     return render(
         request,
         "add_task.html",
         {
             'tasks': tasks,
-            'selected_date': selected_date,
-            'today': date.today().isoformat()  # Add this line
+            'selected_date': selected_date_obj,
+            'today': date.today()
         }
     )
 

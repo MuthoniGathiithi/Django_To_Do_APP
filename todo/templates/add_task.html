@@ -167,7 +167,14 @@
 
         <!-- Task List -->
         <div class="task-list">
-            <h2>Tasks</h2>
+            <h2>
+                Tasks for 
+                {% if selected_date %}
+                    {{ selected_date|date:"jS F Y" }}
+                {% else %}
+                    {{ today|date:"jS F Y" }}
+                {% endif %}
+            </h2>
             {% if tasks %}
                 {% for task in tasks %}
                     <div class="task-item {% if task.completed %}completed{% endif %}">

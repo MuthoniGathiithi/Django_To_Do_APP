@@ -211,6 +211,29 @@
             {% endif %}
         </div>
 
+        <!-- Upcoming Tasks Section -->
+        <div class="upcoming-tasks" style="margin-top: 40px;">
+            <h2>Upcoming Tasks</h2>
+            <h3>Tasks for the next 3 days:</h3>
+            {% regroup consecutive_tasks by date as day_list %}
+            <ul>
+                {% for day in day_list %}
+                    <li>
+                        <strong>Tasks for {{ day.grouper|date:"jS F Y" }}:</strong>
+                        {% if day.list %}
+                            <ul>
+                                {% for task in day.list %}
+                                    <li>{{ task.title }} {% if task.completed %}(Completed){% else %}(Pending){% endif %}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            No tasks for this day.
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+
         <!-- Success Messages -->
         {% if messages %}
             {% for message in messages %}

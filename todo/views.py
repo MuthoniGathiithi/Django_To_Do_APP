@@ -8,7 +8,15 @@ def show_tasks(request):
         tasks = Task.objects.filter(date=selected_date)
     else:
         tasks = Task.objects.filter(date=date.today())
-    return render(request, "add_task.html", {'tasks': tasks, 'selected_date': selected_date})
+    return render(
+        request,
+        "add_task.html",
+        {
+            'tasks': tasks,
+            'selected_date': selected_date,
+            'today': date.today().isoformat()  # Add this line
+        }
+    )
 
 def add_tasks(request):
     if request.method == "POST":

@@ -16,3 +16,9 @@ def add_tasks(request):
     return redirect('show_tasks')  # make sure this matches your URL name
     return render(request, 'add_task.html')
 # Create your views here.
+
+def remove_task(request,task_id):
+    task=Task.objects.get(id=task_id)
+    task.delete()
+    return redirect ("show tasks")
+

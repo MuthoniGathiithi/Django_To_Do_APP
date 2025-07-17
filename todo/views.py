@@ -9,7 +9,10 @@ def show_tasks(request):
 
 
 def add_tasks(request):
-    if request.method == "POST"
-    title =request.POST.get("title")
-    Task.objects.create(title=title)
+    if request.method == "POST":
+     title =request.POST.get("title")
+    if title:  # only add if title is not empty
+            Task.objects.create(title=title)
+    return redirect('show_tasks')  # make sure this matches your URL name
+    return render(request, 'add_task.html')
 # Create your views here.

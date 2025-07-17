@@ -1,24 +1,29 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 
-#show task 
 def show_tasks(request):
-    Task=Task.objects.all()
-
-    return render(request,"add_task.html", {'tasks': Task})
-
+    tasks = Task.objects.all()
+    return render(request, "add_task.html", {'tasks': tasks})
 
 def add_tasks(request):
     if request.method == "POST":
-     title =request.POST.get("title")
-    if title:  # only add if title is not empty
+        title = request.POST.get("title")
+        if title:
             Task.objects.create(title=title)
-    return redirect('show_tasks')  # make sure this matches your URL name
+        return redirect('show_tasks')
     return render(request, 'add_task.html')
-# Create your views here.
 
-def remove_task(request,task_id):
-    task=Task.objects.get(id=task_id)
-    task.delete()
-    return redirect ("show tasks")
+def remove_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == "POST":
+        task.delete()
+        return redirect("show_tasks")
+    return render(request, "confirm_delete.html", {'task': task})
 
+def update_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == "POST":
+        task.completed = True
+        task.save()
+        return redirect('show_tasks')
+    return render(request, "confirm_update.html", {'task': task})
